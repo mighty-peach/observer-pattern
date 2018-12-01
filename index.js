@@ -1,7 +1,7 @@
 const Subscriber = require('./subscriber.js');
 const Publisher = require('./publisher.js');
 
-const publisher = new Publisher();
+const publisher = new Publisher(0.05);
 const subscriber1 = new Subscriber();
 const subscriber2 = new Subscriber();
 const subscriber3 = new Subscriber();

@@ -1,9 +1,10 @@
 // @ts-check
 
 class Publisher {
-    constructor () {
+    constructor (gup) {
         this.subscribers = [];
         this._info = null;
+        this.gup = gup;
     }
 
     addSubscriber (subscriber) {
@@ -26,6 +27,17 @@ class Publisher {
     }
 
     /**
+     * @param {Number} newInfo
+     * @returns {Boolean}
+     */
+    isChanged (newInfo) {
+        let diff = this.info - newInfo;
+        diff = diff > 0 ? diff : -1 * diff;
+
+        return diff >= this.gup;
+    }
+
+    /**
      * @returns {Number} _info
      */
     get info () {
@@ -35,8 +47,10 @@ class Publisher {
      * @param {Number} newInfo
      */
     set info (newInfo) {
-        this._info = newInfo;
-        this.notifySubscribers(newInfo);
+        if (this.isChanged(newInfo) && newInfo !== null) {
+            this._info = newInfo;
+            this.notifySubscribers(newInfo);
+        }
     }
 };
 
